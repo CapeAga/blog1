@@ -1,13 +1,33 @@
 {
   "name": "blog1",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "个人博客网站项目 - 基于 Next.js 和 NestJS",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev:frontend": "cd apps/frontend && pnpm dev",
+    "dev:backend": "cd apps/backend && pnpm start:dev",
+    "dev": "pnpm run -r --parallel dev",
+    "docker:up": "docker-compose -f docker-compose.dev.yml up -d",
+    "docker:down": "docker-compose -f docker-compose.dev.yml down",
+    "docker:logs": "docker-compose -f docker-compose.dev.yml logs -f",
+    "start:dev": "pnpm docker:up && pnpm dev",
+    "stop:dev": "pnpm docker:down",
+    "build": "pnpm run -r build",
+    "test": "pnpm run -r test",
+    "lint": "pnpm run -r lint"
   },
-  "keywords": [],
+  "keywords": [
+    "blog",
+    "nextjs",
+    "nestjs",
+    "typescript",
+    "pnpm",
+    "monorepo"
+  ],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.8.1"
+  "packageManager": "pnpm@10.8.1",
+  "devDependencies": {
+    "@nestjs/cli": "^11.0.6"
+  }
 }
