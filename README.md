@@ -9,12 +9,16 @@
 - TypeScript
 - Tailwind CSS
 - ESLint
+- TipTap 富文本编辑器
+- SWR 数据获取
 
 ### 后端
 - NestJS (Node.js)
 - TypeScript
 - PostgreSQL (数据库)
 - Redis (缓存)
+- Prisma ORM
+- Passport (认证)
 
 ## 项目结构
 
@@ -22,7 +26,16 @@
 blog1/                      # 项目根目录
 ├── apps/                   # 应用程序目录
 │   ├── frontend/           # Next.js 前端应用
+│   │   ├── src/            # 源代码
+│   │   │   ├── app/        # Next.js App Router 页面
+│   │   │   ├── components/ # React 组件
+│   │   │   ├── lib/        # 工具和辅助函数
+│   │   │   └── types/      # TypeScript 类型定义
 │   └── backend/            # NestJS 后端应用
+│       ├── src/            # 源代码
+│       │   ├── modules/    # NestJS 模块
+│       │   ├── prisma/     # Prisma 配置和迁移
+│       │   └── main.ts     # 应用入口
 ├── docker-compose.dev.yml  # 本地开发环境 Docker Compose 配置
 ├── package.json            # 根项目配置
 └── pnpm-workspace.yaml     # PNPM 工作区配置
@@ -31,54 +44,138 @@ blog1/                      # 项目根目录
 ## 环境要求
 
 - Node.js >= 18 (LTS 版本推荐)
-- PNPM >= 8
-- Docker 和 Docker Compose
+- PNPM >= 8 (必须使用 PNPM 作为包管理器)
+- Docker 和 Docker Compose (用于本地开发数据库)
 - Git
 
 ## 本地开发环境设置
 
-### 1. 克隆项目
+### 1. 安装 Node.js 和 PNPM
+
+如果尚未安装 Node.js，请从 [官方网站](https://nodejs.org/) 下载并安装 LTS 版本。
+
+安装 PNPM:
 
 ```bash
-git clone https://github.com/CapeAga/blog1.git
+npm install -g pnpm
+```
+
+### 2. 克隆项目
+
+```bash
+git clone https://github.com/yourusername/blog1.git
 cd blog1
 ```
 
-### 2. 安装依赖
+### 3. 安装依赖
+
+在项目根目录执行:
 
 ```bash
 pnpm install
 ```
 
-### 3. 启动开发环境
+这将安装根项目及所有子项目的依赖。
 
-启动 PostgreSQL 和 Redis 容器：
+### 4. 环境配置
+
+在 `apps/backend/` 目录中创建 `.env` 文件:
+
+```
+# 数据库连接
+DATABASE_URL="postgresql://pguser:pgpassword@localhost:5432/blog?schema=public"
+
+# Redis 连接
+REDIS_HOST=localhost
+REDIS_PORT=6379
+
+# JWT 配置
+JWT_SECRET=your_jwt_secret_key
+JWT_EXPIRES_IN=1d
+
+# 服务器配置
+PORT=3001
+```
+
+在 `apps/frontend/` 目录中创建 `.env.local` 文件:
+
+```
+# API URL
+NEXT_PUBLIC_API_URL=http://localhost:3001
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+```
+
+### 5. 启动开发环境
+
+#### 启动数据库容器
+
+启动 PostgreSQL 和 Redis 容器:
 
 ```bash
 pnpm docker:up
 ```
 
-启动前端和后端开发服务器：
+#### 初始化数据库
+
+初始化 Prisma 和数据库结构:
 
 ```bash
-# 同时启动前端和后端
-pnpm dev
+cd apps/backend
+npx prisma migrate dev --name init
+cd ../..
+```
 
-# 或者分别启动
+#### 启动应用
+
+同时启动前端和后端:
+
+```bash
+cd ./blog1
+pnpm dev
+```
+
+或者分别启动:
+
+```bash
+# 前端
 pnpm dev:frontend
+
+# 后端
 pnpm dev:backend
 ```
 
-### 4. 访问应用
+### 6. 访问应用
 
 - 前端: http://localhost:3000
 - 后端 API: http://localhost:3001
+- API 文档: http://localhost:3001/api
 
-### 5. 关闭开发环境
+## 常见问题排查
 
-```bash
-pnpm docker:down
-```
+### 样式不显示
+
+如果页面样式没有正确加载:
+
+1. 确保 Tailwind CSS 已正确安装和配置
+2. 在前端应用中检查 `globals.css` 是否被正确导入
+3. 确保前端组件中使用的是项目定义的 UI 组件
+4. 重新启动开发服务器，清除浏览器缓存
+
+### 无法连接数据库
+
+如果遇到数据库连接问题:
+
+1. 确保 Docker 容器正在运行: `docker ps`
+2. 验证 `.env` 文件中的数据库连接字符串是否正确
+3. 尝试重启数据库容器: `pnpm docker:down && pnpm docker:up`
+
+### API 请求失败
+
+如果前端无法连接到后端 API:
+
+1. 确保后端服务已启动并运行在正确的端口上
+2. 检查 `NEXT_PUBLIC_API_URL` 环境变量是否设置正确
+3. 查看浏览器控制台中的错误信息
 
 ## 其他常用命令
 
@@ -94,6 +191,9 @@ pnpm lint
 
 # 查看 Docker 容器日志
 pnpm docker:logs
+
+# 停止所有开发容器
+pnpm docker:down
 ```
 
 ## 部署

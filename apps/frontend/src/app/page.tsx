@@ -1,103 +1,69 @@
-import Image from "next/image";
+'use client';
+
+import React from 'react';
+import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="flex flex-col items-center gap-16 md:gap-24">
+      <section className="flex flex-col items-center text-center max-w-3xl gap-4 md:gap-6">
+        <h1 className="font-serif">欢迎来到我的个人博客</h1>
+          
+        <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+            这是一个使用Next.js构建的现代博客平台，提供文章撰写、AI工具集成以及完整的内容管理系统。
+        </p>
+          
+        <div className="text-sm text-muted-foreground mt-4">
+          探索下面的主要板块或直接 <Link href="/blog" className="text-primary hover:underline font-medium">阅读博客</Link>.
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        
+        <div className="flex flex-col sm:flex-row gap-4 mt-8">
+          <Link 
+            href="/blog" 
+            className="inline-flex items-center justify-center px-6 py-3 text-sm font-medium rounded-md bg-primary text-primary-foreground hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 transition-colors"
+          >
+              浏览博客文章
+          </Link>
+          <Link 
+            href="/ai-tools" 
+            className="inline-flex items-center justify-center px-6 py-3 text-sm font-medium rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 transition-colors"
+          >
+              体验AI工具
+          </Link>
+          </div>
+      </section>
+        
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 w-full max-w-6xl">
+        <div className="border border-border rounded-lg p-6 flex flex-col">
+          <h3 className="font-serif mb-3">文章与博客</h3>
+          <p className="text-muted-foreground text-sm mb-5 flex-grow">
+              分享我的想法、经验和见解，涵盖技术、设计和个人成长等主题。
+          </p>
+          <Link href="/blog" className="text-sm font-medium text-primary hover:underline mt-auto">
+            阅读文章 &rarr;
+          </Link>
+          </div>
+          
+        <div className="border border-border rounded-lg p-6 flex flex-col">
+          <h3 className="font-serif mb-3">AI工具集</h3>
+          <p className="text-muted-foreground text-sm mb-5 flex-grow">
+              探索各种AI辅助工具，帮助提高生产力和创造力。
+          </p>
+          <Link href="/ai-tools" className="text-sm font-medium text-primary hover:underline mt-auto">
+            查看工具 &rarr;
+          </Link>
+          </div>
+          
+        <div className="border border-border rounded-lg p-6 flex flex-col">
+          <h3 className="font-serif mb-3">关于我</h3>
+          <p className="text-muted-foreground text-sm mb-5 flex-grow">
+              了解我的背景、技能和项目经验。
+          </p>
+          <Link href="/about" className="text-sm font-medium text-primary hover:underline mt-auto">
+            了解更多 &rarr;
+          </Link>
+        </div>
+      </section>
+      </div>
   );
 }

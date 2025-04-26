@@ -1,26 +1,178 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+/* 基础设置 */
+html, body {
+  min-height: 100%;
+}
+
+/* 确保样式加载测试 */
+body {
+  background-color: #f8fafc; 
+  color: #111827;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* CSS变量设置 */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: 0 0% 98%; /* Lighter off-white */
+  --foreground: 240 10% 3.9%; /* Darker Gray */
+
+  --card: 0 0% 100%;
+  --card-foreground: 240 10% 3.9%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 10% 3.9%;
+
+  --primary: 25 95% 53%; /* Example: Muted Orange/Brown Accent */
+  --primary-foreground: 0 0% 98%;
+
+  --secondary: 240 4.8% 95.9%; /* Lighter Gray */
+  --secondary-foreground: 240 5.9% 10%;
+
+  --muted: 240 4.8% 95.9%;
+  --muted-foreground: 240 3.8% 46.1%; /* Muted Gray */
+
+  --accent: 240 4.8% 95.9%;
+  --accent-foreground: 240 5.9% 10%;
+
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+
+  --border: 240 5.9% 90%; /* Lighter border */
+  --input: 240 5.9% 90%;
+  --ring: 25 95% 53%; /* Muted Orange/Brown Accent */
+
+  --radius: 0.3rem; /* Slightly reduced radius */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.dark {
+  --background: 240 10% 3.9%; /* Dark Gray */
+  --foreground: 0 0% 98%; /* Light Gray */
+
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+
+  --primary: 25 95% 53%; /* Muted Orange/Brown Accent */
+  --primary-foreground: 0 0% 98%;
+
+  --secondary: 240 3.7% 15.9%; /* Darker Gray */
+  --secondary-foreground: 0 0% 98%;
+
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+
+  --accent: 240 3.7% 15.9%;
+  --accent-foreground: 0 0% 98%;
+
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --ring: 25 95% 53%; /* Muted Orange/Brown Accent */
 }
 
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 0 0% 98%; /* Lighter off-white */
+    --foreground: 240 10% 3.9%; /* Darker Gray */
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+
+    --primary: 25 95% 53%; /* Example: Muted Orange/Brown Accent */
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 240 4.8% 95.9%; /* Lighter Gray */
+    --secondary-foreground: 240 5.9% 10%;
+
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%; /* Muted Gray */
+
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 5.9% 90%; /* Lighter border */
+    --input: 240 5.9% 90%;
+    --ring: 25 95% 53%; /* Muted Orange/Brown Accent */
+
+    --radius: 0.3rem; /* Slightly reduced radius */
+  }
+
+  .dark {
+    --background: 240 10% 3.9%; /* Dark Gray */
+    --foreground: 0 0% 98%; /* Light Gray */
+
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 25 95% 53%; /* Muted Orange/Brown Accent */
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 240 3.7% 15.9%; /* Darker Gray */
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 25 95% 53%; /* Muted Orange/Brown Accent */
   }
 }
 
+/* Base styles */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-background text-foreground font-sans; /* Apply base font */
+  font-feature-settings: "kern";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-serif font-bold tracking-tight; /* Use serif font for headers */
+  text-rendering: optimizeLegibility;
+}
+
+h1 {
+  @apply text-4xl md:text-5xl lg:text-6xl leading-tight;
+}
+
+h2 {
+  @apply text-3xl md:text-4xl leading-snug;
+  }
+
+h3 {
+  @apply text-2xl md:text-3xl leading-snug;
+}
+
+h4 {
+  @apply text-xl md:text-2xl leading-snug;
+}
+
+a {
+  @apply text-primary hover:underline;
+}
+
+/* Remove default animations if not needed for editorial style */
+/* ... remove or comment out keyframes and animation classes ... */
